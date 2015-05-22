@@ -71,13 +71,12 @@ public class MyWeatherService extends Service {
                 .getSystemService(SENSOR_SERVICE);
         Sensor accel = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         if(accel!=null)
-            sensorManager.registerListener(listen, accel, SensorManager.SENSOR_DELAY_UI);
+            sensorManager.registerListener(listen, accel, SensorManager.SENSOR_DELAY_FASTEST);
         else
             Log.d("Zack", "SENSOR is null");
 
 
         listen = new SensorListen();
-//        SharedPreferences notifyinfo = this.getSharedPreferences("notifyinfo", 0);
 //        notifyID = notifyinfo.getInt("notifyID", 0);
         Log.d("Zack", "onCreate");
         mNotificationManager =
@@ -93,24 +92,6 @@ public class MyWeatherService extends Service {
         filter.addAction(Intent.ACTION_TIME_TICK);
         registerReceiver(receiver, filter);
 
-//        iconsMap.put("01d", R.drawable.a01d);
-//        iconsMap.put("01n", R.drawable.a01n);
-//        iconsMap.put("02d", R.drawable.a02d);
-//        iconsMap.put("02n", R.drawable.a02n);
-//        iconsMap.put("03d", R.drawable.a03d);
-//        iconsMap.put("03n", R.drawable.a03n);
-//        iconsMap.put("04d", R.drawable.a04d);
-//        iconsMap.put("04n", R.drawable.a04n);
-//        iconsMap.put("09d", R.drawable.a09d);
-//        iconsMap.put("09n", R.drawable.a09n);
-//        iconsMap.put("10d", R.drawable.a10d);
-//        iconsMap.put("10n", R.drawable.a10n);
-//        iconsMap.put("11d", R.drawable.a11d);
-//        iconsMap.put("11n", R.drawable.a11n);
-//        iconsMap.put("13d", R.drawable.a13d);
-//        iconsMap.put("13n", R.drawable.a13n);
-//        iconsMap.put("50d", R.drawable.a50d);
-//        iconsMap.put("50n", R.drawable.a50n);
 
 
     }
@@ -127,100 +108,6 @@ public class MyWeatherService extends Service {
         }
     };
 
-//    private class JsonReadTask extends AsyncTask<String, Void, String> {
-//        @Override
-//        protected String doInBackground(String... params) {
-//            HttpClient httpclient = new DefaultHttpClient();
-//            String CITY = "Taipei";
-//            HttpGet httppost = new HttpGet(params[0] + "?q=" + CITY);
-//            Log.v("Zack", params[0] + "?q=" + CITY);
-//            try {
-//                HttpResponse response = httpclient.execute(httppost);
-//                String responseTXT = inputStreamToString(
-//                        response.getEntity().getContent()).toString();
-//                System.out.println(responseTXT);
-//
-//                responseStr = responseTXT;
-//
-//                System.out.println(responseStr);
-//                JsonParse();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            return null;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String result) {
-//        }
-//
-//        private StringBuilder inputStreamToString(InputStream is) {
-//            String rLine;
-//            StringBuilder answer = new StringBuilder();
-//            BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-//
-//            try {
-//                while ((rLine = rd.readLine()) != null) {
-//                    answer.append(rLine);
-//                }
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            return answer;
-//        }
-//
-//    }
-//
-//    public void accessWebService() {
-//        JsonReadTask task = new JsonReadTask();
-//        String url = "http://api.openweathermap.org/data/2.5/weather";
-//        task.execute(url);
-//
-//        try {
-//            task.get();
-//        } catch (Exception e) {
-//            Log.e("Service", e.toString());
-//        }
-//
-//    }
-//
-//    public void JsonParse() {
-//
-//        try {
-////            SharedPreferences notifyinfo = this.getSharedPreferences("notifyinfo", 0);
-////            notifyID = notifyinfo.getInt("notifyID", 0);
-////            notifyID++;
-//            Log.d("Zack", responseStr);
-//            JSONObject jsonResponse = new JSONObject(responseStr);
-//            JSONArray weatherdetail = jsonResponse.getJSONArray("weather");
-//            JSONObject tempdetail = jsonResponse.getJSONObject("main");
-//            weather = weatherdetail.getJSONObject(0).getString("main");
-////            String description = weatherdetail.getJSONObject(0).getString("description");
-//            String icon = weatherdetail.getJSONObject(0).getString("icon");
-//            double temp = tempdetail.getDouble("temp");
-//            Log.d("Zack", "weather = " + weather + "temp = " + (temp - 273.15) + "icon = " + icon);
-//            Log.d("Zack", "icon = " + iconsMap.get(icon));
-//            mNotificationManager.cancelAll();
-//            notification = new Notification.Builder(getApplicationContext())
-//                    .setContentTitle("Taipei")
-//                    .setContentText(weather + " ,  temp = " + ((int) (temp - 273.15) * 100) / 100 + "℃")
-//                    .setSmallIcon((Integer) iconsMap.get(icon))
-//                    .build();
-//            mNotificationManager.notify(notifyID, notification);
-////            SharedPreferences example=getSharedPreferences("notifyinfo",0);
-////            Editor editor = example.edit();
-////            editor.putInt("notifyID",notifyID);
-////            editor.apply();
-//        } catch (JSONException e) {
-//            Log.d("JSON Parse ERROR", e.toString());
-//        }
-//    }
-//
-//    public boolean isOnline() {
-//        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-//        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-//        return netInfo != null && netInfo.isConnectedOrConnecting();
-//    }
 
 
     private final IMyAidlInterface.Stub mBinder = new IMyAidlInterface.Stub(){
@@ -271,7 +158,7 @@ public class MyWeatherService extends Service {
             lastUpdate = System.currentTimeMillis();
         }
 
-        if(Math.abs(preUpdate-lastUpdate)<2000 && Math.abs(senZ)<1&& state==2){
+        if(Math.abs(preUpdate-lastUpdate)<2000 && Math.abs(senZ)<2&& state==2){
             Log.d("Zack","STARTACTIVITY");
 
             preUpdate=0;
