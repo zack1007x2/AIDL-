@@ -5,7 +5,7 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "com.example.zack.sensorservice"
+        applicationId "com.example.zack.myserviceaidl"
         minSdkVersion 17
         targetSdkVersion 22
         versionCode 1

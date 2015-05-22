@@ -1,4 +1,4 @@
-package com.example.zack.sensorservice;
+package com.example.zack.myserviceaidl;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
